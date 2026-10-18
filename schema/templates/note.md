@@ -2,7 +2,6 @@
 type: note
 title:
 description:
-event_date:
 tags: []
 timestamp:
 ---

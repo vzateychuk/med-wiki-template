@@ -2,7 +2,7 @@
 type: regimen
 title: Текущая схема
 description:
-status: active
+status: active  # active | none
 tags: [medications]
 timestamp:
 ---
@@ -13,6 +13,6 @@ timestamp:
 
 | Препарат | Доза | Зачем | С | Источник |
 | --- | --- | --- | --- | --- |
-| | | | YYYY-MM-DD | [документ](../../raw/docs/YYYY-MM-DD_type.md) |
+| | | | YYYY-MM-DD | [документ](/raw/docs/YYYY-MM-DD_type.md) |
 
 Если активных препаратов нет, поставь `status: none` и напиши это одной строкой вместо таблицы.

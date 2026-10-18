@@ -2,7 +2,6 @@
 type: symptom
 title:
 description:
-event_date:
 tags: []
 timestamp:
 ---
@@ -21,4 +20,4 @@ timestamp:
 
 Ссылки на существующие страницы. Новый диагноз из жалобы не создавать.
 
-- [диагноз](../diagnoses/<slug>.md)
+- [диагноз](/wiki/diagnoses/<slug>.md)

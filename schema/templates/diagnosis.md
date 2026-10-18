@@ -2,8 +2,8 @@
 type: condition
 title:
 description:
-icd_code:
-status: active
+icd_code:  # код по Международной классификации болезней из документа; нет в документе — пусто
+status: active  # active | monitoring | resolved
 tags: []
 timestamp:
 ---
@@ -20,7 +20,7 @@ timestamp:
 
 | Дата | Событие | Источник |
 | --- | --- | --- |
-| YYYY-MM-DD | Короткий факт | [документ](../../raw/docs/YYYY-MM-DD_type.md) |
+| YYYY-MM-DD | Короткий факт | [документ](/raw/docs/YYYY-MM-DD_type.md) |
 
 ## Мониторинг
 
@@ -28,7 +28,7 @@ timestamp:
 
 ## Связанные метрики
 
-- [показатель](../metrics/<slug>.md)
+- [показатель](/wiki/metrics/<slug>.md)
 
 ## Открытые вопросы
 

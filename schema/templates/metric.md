@@ -2,9 +2,9 @@
 type: lab
 title:
 description:
-unit:
-ref_range:
-status:
+unit:  # как в документе
+ref_range:  # как в документе
+status:  # normal | elevated | low | borderline — по последнему значению в «Динамике»
 tags: [key-metric]
 timestamp:
 ---
@@ -17,12 +17,12 @@ timestamp:
 
 ## Динамика
 
-Одна строка на дату. Повтор той же даты — обновить строку, не добавлять вторую.
+Одна строка на дату.
 
 | Дата | Значение | Референс | Статус | Источник |
 | --- | --- | --- | --- | --- |
-| YYYY-MM-DD | | | | [документ](../../raw/docs/YYYY-MM-DD_type.md) |
+| YYYY-MM-DD | | | | [документ](/raw/docs/YYYY-MM-DD_type.md) |
 
 ## Связанные диагнозы
 
-- [диагноз](../diagnoses/<slug>.md)
+- [диагноз](/wiki/diagnoses/<slug>.md)

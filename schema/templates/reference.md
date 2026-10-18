@@ -2,7 +2,7 @@
 type: reference
 title:
 description:
-resource: ../../raw/articles/YYYY-MM-DD-slug.md
+source: /raw/articles/YYYY-MM-DD-slug.md
 tags: []
 timestamp:
 ---
@@ -11,7 +11,7 @@ timestamp:
 
 ## Источник
 
-Ссылка на `raw/articles/` или `raw/transcripts/`.
+Автор, издание, исходный адрес — если они есть в файле. Ссылка на файл — в поле `source`.
 
 ## Ключевые тезисы
 
@@ -21,4 +21,4 @@ timestamp:
 
 Только явные связи с досье. Нет связи — секцию оставить пустой и не записывать тезис как личный факт.
 
-- [диагноз](../diagnoses/<slug>.md)
+- [диагноз](/wiki/diagnoses/<slug>.md)
