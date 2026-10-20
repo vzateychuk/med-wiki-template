@@ -1,0 +1,8 @@
+# gitignore
+
+raw/
+__pycache__/
+
+*.log
+*.html
+

@@ -1,0 +1,943 @@
+# Канон показателей лаборатории: несколько названий → один slug.
+# Читает resolve_metric_slug.py. Правьте только этот файл.
+#
+# Формат:
+# - slug: каноническое имя файла wiki/metrics/<slug>.md
+#   title: человекочитаемое название (для _index и шапки)
+#   value_kind: numeric | qualitative | panel-item
+#   synonyms: список строк как в документах (любой регистр при сравнении)
+#
+# Правила (анти-склейка):
+# 1. Сопоставление ТОЛЬКО точное (после normalize). Не полагайтесь на «похоже».
+# 2. Ratio / % / абсолют / разные биоматериалы — РАЗНЫЕ slug
+#    (aptt vs aptt-ratio; neutrophils-abs vs neutrophils-pct; wbc vs wbc-urine).
+# 3. Не добавляйте короткий синоним, который является подстрокой другого показателя
+#    (запрещено: «Гемоглобин» ловит MCH; «Холестерин» ловит ЛПНП — для ЛПНП
+#    нужен отдельный полный синоним «Холестерин ЛПНП»).
+# 4. После правок: python resolve_metric_slug.py --self-check
+# 5. Имена/slug из других wiki (например medocs-wiki) добавляй как synonyms
+#    на НАШ канонический slug (glucose → fasting-glucose, hdl-cholesterol → hdl).
+#    Не плоди второй slug ради чужого имени файла.
+
+metrics:
+  - slug: tsh
+    title: Тиреотропный гормон (ТТГ)
+    value_kind: numeric
+    synonyms:
+      - ТТГ
+      - TSH
+      - Тиреотропный гормон
+      - Тиреотропный гормон (ТТГ)
+      - ТТГ (Тиреотропный гормон)
+      - Thyroid Stimulating Hormone
+
+  - slug: free-t4
+    title: Тироксин свободный (Т4 св.)
+    value_kind: numeric
+    synonyms:
+      - Т4 свободный
+      - Т4 св.
+      - Тироксин свободный
+      - Тироксин свободный (Т4 св.)
+      - Т4 свободный (Тироксин свободный)
+      - Free T4
+      - FT4
+
+  - slug: free-t3
+    title: Трийодтиронин свободный (Т3 св.)
+    value_kind: numeric
+    synonyms:
+      - Т3 свободный
+      - Т3 св.
+      - Трийодтиронин свободный
+      - Free T3
+      - FT3
+
+  - slug: vitamin-d
+    title: Витамин D (25-OH)
+    value_kind: numeric
+    synonyms:
+      - Витамин D
+      - Витамин Д
+      - 25-OH витамин D
+      - Общий витамин D
+      - Общий витамин D (25-ОН витамин D)
+      - Витамин D (25-ОН витамин D)
+      - Витамин D, 25-гидрокси
+      - 25(OH)D
+      - Vitamin D
+
+  - slug: hba1c
+    title: Гликированный гемоглобин (HbA1c)
+    value_kind: numeric
+    synonyms:
+      - HbA1c
+      - HbA1C
+      - Гликированный гемоглобин
+      - Гликированный гемоглобин (HbA1c)
+      - Гемоглобин гликозилированный (HbA1c)
+      - Гемоглобин гликозилированный
+
+  - slug: fasting-glucose
+    title: Глюкоза
+    value_kind: numeric
+    synonyms:
+      - Глюкоза
+      - Глюкоза (сыворотка)
+      - Глюкоза крови
+      - Глюкоза натощак
+      - Glucose
+      # slug из medocs-wiki
+      - glucose
+
+  - slug: total-cholesterol
+    title: Холестерин общий
+    value_kind: numeric
+    synonyms:
+      - Холестерин
+      - Холестерин общий
+      - Общий холестерин
+      - Total cholesterol
+
+  - slug: ldl
+    title: ЛПНП-холестерин
+    value_kind: numeric
+    synonyms:
+      - ЛПНП
+      - ЛПНП-холестерин
+      - ЛПНП-холестерин (LDL)
+      - Холестерин ЛПНП
+      - Липопротеиды низкой плотности (ЛПНП)
+      - LDL
+      - LDL-C
+      # slug из medocs-wiki
+      - ldl-cholesterol
+
+  - slug: hdl
+    title: ЛПВП-холестерин
+    value_kind: numeric
+    synonyms:
+      - ЛПВП
+      - ЛПВП-холестерин
+      - ЛПВП-холестерин (HDL)
+      - Холестерин ЛПВП
+      - Липопротеиды высокой плотности (ЛПВП)
+      - HDL
+      - HDL-C
+      # slug из medocs-wiki
+      - hdl-cholesterol
+
+  - slug: triglycerides
+    title: Триглицериды
+    value_kind: numeric
+    synonyms:
+      - Триглицериды
+      - ТГ
+      - Triglycerides
+
+  - slug: ferritin
+    title: Ферритин
+    value_kind: numeric
+    synonyms:
+      - Ферритин
+      - Ferritin
+
+  - slug: insulin
+    title: Инсулин
+    value_kind: numeric
+    synonyms:
+      - Инсулин
+      - Инсулин натощак
+      - Insulin
+
+  - slug: homa-ir
+    title: HOMA (индекс инсулинорезистентности)
+    value_kind: numeric
+    synonyms:
+      - HOMA
+      - HOMA Индекс инсулинорезистентности
+      - Индекс инсулинорезистентности
+      - HOMA-IR
+
+  - slug: cortisol
+    title: Кортизол
+    value_kind: numeric
+    synonyms:
+      - Кортизол
+      - Cortisol
+
+  - slug: acth
+    title: АКТГ
+    value_kind: numeric
+    synonyms:
+      - АКТГ
+      - АКТГ в плазме
+      - ACTH
+
+  - slug: calcitonin
+    title: Кальцитонин
+    value_kind: numeric
+    synonyms:
+      - Кальцитонин
+      - Кальцитонин (ИСТ)
+      - Calcitonin
+
+  - slug: hemoglobin
+    title: Гемоглобин
+    value_kind: numeric
+    synonyms:
+      - Гемоглобин
+      - Гемоглобин (HGB)
+      - HGB
+
+  - slug: ige-bet-v1
+    title: IgE rBet v 1 (берёза)
+    value_kind: panel-item
+    synonyms:
+      - rBet v 1
+      - rBet v 1 (Берёза)
+      - rBet v1
+      - Берёза (rBet v 1)
+
+  - slug: ige-art-v1
+    title: IgE nArt v / полынь
+    value_kind: panel-item
+    synonyms:
+      - nArt v 1
+      - nArt v VI
+      - nArt v VI (Полынь)
+      - Полынь
+      - Art v 1
+
+  - slug: ige-phl-p
+    title: IgE тимофеевка (rPhl p)
+    value_kind: panel-item
+    synonyms:
+      - rPhl p 1, rPhl p 5b (Тимофеевка луговая)
+      - rPhl p 1
+      - rPhl p 5
+      - Тимофеевка луговая
+
+  - slug: alt
+    title: АЛТ
+    value_kind: numeric
+    synonyms:
+      - АЛТ
+      - Аланинаминотрансфераза
+      - Аланинаминотрансфераза (АЛТ)
+      - ALT
+
+  - slug: ast
+    title: АСТ
+    value_kind: numeric
+    synonyms:
+      - АСТ
+      - Аспартатаминотрансфераза
+      - Аспартатаминотрансфераза (АСТ)
+      - AST
+
+  - slug: ggt
+    title: ГГТ
+    value_kind: numeric
+    synonyms:
+      - ГГТ
+      - Гамма-глутамилтрансфераза
+      - Гамма-глутамилтрансфераза (ГГТ)
+      - Гаммаглутамилтранспептидаза (ГГТ)
+      - GGT
+
+  - slug: alp
+    title: Щелочная фосфатаза
+    value_kind: numeric
+    synonyms:
+      - ЩФ
+      - Щелочная фосфатаза
+      - Щелочная фосфатаза (ЩФ)
+      - ALP
+
+  - slug: total-bilirubin
+    title: Билирубин общий
+    value_kind: numeric
+    synonyms:
+      - Билирубин
+      - Билирубин общий
+      - Total bilirubin
+
+  - slug: direct-bilirubin
+    title: Билирубин прямой
+    value_kind: numeric
+    synonyms:
+      - Билирубин прямой
+      - Билирубин связанный (прямой)
+      - Direct bilirubin
+
+  - slug: indirect-bilirubin
+    title: Билирубин непрямой
+    value_kind: numeric
+    synonyms:
+      - Билирубин свободный (непрямой)
+      - Билирубин непрямой
+      - Indirect bilirubin
+
+  - slug: albumin
+    title: Альбумин
+    value_kind: numeric
+    synonyms:
+      - Альбумин
+      - Albumin
+
+  - slug: total-protein
+    title: Общий белок
+    value_kind: numeric
+    synonyms:
+      - Общий белок
+      - Белок
+      - Total protein
+
+  - slug: creatinine
+    title: Креатинин
+    value_kind: numeric
+    synonyms:
+      - Креатинин
+      - Creatinine
+
+  - slug: urea
+    title: Мочевина
+    value_kind: numeric
+    synonyms:
+      - Мочевина
+      - Urea
+
+  - slug: uric-acid
+    title: Мочевая кислота
+    value_kind: numeric
+    synonyms:
+      - Мочевая кислота
+      - Uric acid
+
+  - slug: amylase
+    title: Амилаза
+    value_kind: numeric
+    synonyms:
+      - Амилаза
+      - Амилаза общая
+      - Альфа-амилаза
+      - Amylase
+      # slug из medocs-wiki
+      - alpha-amylase
+
+  - slug: pancreatic-amylase
+    title: Панкреатическая амилаза
+    value_kind: numeric
+    synonyms:
+      - Панкреатическая амилаза
+      - Амилаза панкреатическая
+      - Pancreatic amylase
+
+  - slug: lipase
+    title: Липаза
+    value_kind: numeric
+    synonyms:
+      - Липаза
+      - Lipase
+
+  - slug: iron
+    title: Железо сывороточное
+    value_kind: numeric
+    synonyms:
+      - Железо
+      - Железо сывороточное
+      - Iron
+
+  - slug: tibc
+    title: ОЖСС
+    value_kind: numeric
+    synonyms:
+      - ОЖСС
+      - ОЖСС (Общая железосвязывающая способность)
+      - Общая железосвязывающая способность
+      - TIBC
+
+  - slug: calcium
+    title: Кальций общий
+    value_kind: numeric
+    synonyms:
+      - Кальций
+      - Кальций общий
+      - Calcium
+      # slug из medocs-wiki
+      - calcium-total
+
+  - slug: pth
+    title: Паратгормон
+    value_kind: numeric
+    synonyms:
+      - Паратгормон
+      - ПТГ
+      - PTH
+      # slug из medocs-wiki
+      - parathyroid-hormone
+
+  - slug: pinp
+    title: PINP (маркер ремоделирования кости)
+    value_kind: numeric
+    synonyms:
+      - PINP
+      - Total PINP
+      - Маркер ремоделирования костей (Total PINP)
+      - Маркер формирования костного матрикса (PINP)
+
+  - slug: osteocalcin
+    title: Остеокальцин
+    value_kind: numeric
+    synonyms:
+      - Остеокальцин
+      - Osteocalcin
+
+  - slug: anti-tpo
+    title: Антитела к ТПО
+    value_kind: numeric
+    synonyms:
+      - АТПО
+      - АТ-ТПО
+      - Пероксидаза щитовидной железы, аутоантитела (АТПО)
+      - Антитела к тиреопероксидазе (АТПО)
+      - Антитела к тиреопероксидазе (анти-ТПО)
+      - anti-TPO
+
+  - slug: aptt
+    title: АЧТВ
+    value_kind: numeric
+    synonyms:
+      - АЧТВ
+      - АЧТВ (Активированное частичное тромбопластиновое время)
+      - Активированное частичное тромбопластиновое время (АЧТВ)
+      - APTT
+
+  - slug: aptt-ratio
+    title: АЧТВ (Ratio)
+    value_kind: numeric
+    synonyms:
+      - АЧТВ (Ratio)
+      - АЧТВ Ratio
+      - APTT Ratio
+
+  - slug: inr
+    title: МНО (INR)
+    value_kind: numeric
+    synonyms:
+      - МНО
+      - MHO (INR)
+      - МНО (INR)
+      - МНО (международное нормализованное отношение)
+      - INR
+      - Протромбин (МНО)
+
+  - slug: fibrinogen
+    title: Фибриноген
+    value_kind: numeric
+    synonyms:
+      - Фибриноген
+      - Fibrinogen
+
+  - slug: antithrombin-iii
+    title: Антитромбин III
+    value_kind: numeric
+    synonyms:
+      - Антитромбин III
+      - AT III
+
+  - slug: wbc
+    title: Лейкоциты (кровь)
+    value_kind: numeric
+    synonyms:
+      - Лейкоциты
+      - Лейкоциты (WBC)
+      - WBC
+
+  - slug: wbc-urine
+    title: Лейкоциты (моча)
+    value_kind: qualitative
+    synonyms:
+      - Лейкоциты (моча)
+
+  - slug: wbc-vagina
+    title: Лейкоциты (влагалище)
+    value_kind: qualitative
+    synonyms:
+      - Лейкоциты, влагалище
+      - Микроскопия: Лейкоциты (влагалище)
+
+  - slug: wbc-urethra
+    title: Лейкоциты (уретра)
+    value_kind: qualitative
+    synonyms:
+      - Лейкоциты, уретра
+      - Микроскопия: Лейкоциты (уретра)
+
+  - slug: wbc-cervix
+    title: Лейкоциты (цервикальный канал)
+    value_kind: qualitative
+    synonyms:
+      - Микроскопия: Лейкоциты (цервикальный канал)
+
+  - slug: rbc
+    title: Эритроциты (кровь)
+    value_kind: numeric
+    synonyms:
+      - Эритроциты
+      - Эритроциты (RBC)
+      - RBC
+
+  - slug: rbc-urine
+    title: Эритроциты (моча)
+    value_kind: qualitative
+    synonyms:
+      - Эритроциты (моча)
+
+  - slug: rbc-vagina
+    title: Эритроциты (влагалище)
+    value_kind: qualitative
+    synonyms:
+      - Микроскопия: Эритроциты (влагалище)
+
+  - slug: rbc-cervix
+    title: Эритроциты (цервикальный канал)
+    value_kind: qualitative
+    synonyms:
+      - Микроскопия: Эритроциты (цервикальный канал)
+
+  - slug: platelets
+    title: Тромбоциты
+    value_kind: numeric
+    synonyms:
+      - Тромбоциты
+      - Тромбоциты (PLT)
+      - PLT
+
+  - slug: hematocrit
+    title: Гематокрит
+    value_kind: numeric
+    synonyms:
+      - Гематокрит
+      - Гематокрит (НСТ)
+      - Гематокрит (HCT)
+      - HCT
+
+  - slug: mcv
+    title: MCV
+    value_kind: numeric
+    synonyms:
+      - MCV
+      - MCV (средний объем эритроцита)
+      - Средний объем эритроцита (MCV)
+
+  - slug: mch
+    title: MCH
+    value_kind: numeric
+    synonyms:
+      - MCH
+      - МСН
+      - Среднее содержание гемоглобина в эритроците (МСН)
+      - Среднее содержание гемоглобина в эритроците (MCH)
+      - MCH (среднее содержание гемоглобина в эритроците)
+
+  - slug: mchc
+    title: MCHC
+    value_kind: numeric
+    synonyms:
+      - MCHC
+      - МСНС
+      - Средняя концентрация гемоглобина в эритроците (МСНС)
+      - Средняя концентрация гемоглобина в эритроците (MCHC)
+      - MCHC (средняя концентрация гемоглобина в эритроците)
+
+  - slug: rdw-cv
+    title: RDW-CV
+    value_kind: numeric
+    synonyms:
+      - RDW-CV
+      - RDW
+      - Анизоцитоз эритроцитов
+      - Анизоцитоз эритроцитов (RDW)
+      - Ширина распределения эритроцитов (RDW-CV)
+
+  - slug: rdw-sd
+    title: RDW-SD
+    value_kind: numeric
+    synonyms:
+      - RDW-SD
+      - Ширина распределения эритроцитов (RDW-SD)
+      - Ширина распределения эритроцитов по объему, стандартное отклонение
+
+  - slug: neutrophils-abs
+    title: Нейтрофилы (абс.)
+    value_kind: numeric
+    synonyms:
+      - Нейтрофильные гранулоциты (NEUT)
+      - Нейтрофилы (абсолютное значение)
+      - NEUT
+
+  - slug: neutrophils-pct
+    title: Нейтрофилы (%)
+    value_kind: numeric
+    synonyms:
+      - Нейтрофильные гранулоциты (NEUT %)
+      - Нейтрофильные гранулоциты (NEUT%)
+      - Нейтрофильные гранулоциты
+      - Нейтрофилы (процент)
+      - NEUT %
+      - NEUT%
+
+  - slug: lymphocytes-abs
+    title: Лимфоциты (абс.)
+    value_kind: numeric
+    synonyms:
+      - Лимфоциты
+      - Лимфоциты (LYMPH)
+      - Лимфоциты (абсолютное значение)
+
+  - slug: lymphocytes-pct
+    title: Лимфоциты (%)
+    value_kind: numeric
+    synonyms:
+      - Лимфоциты (LYMPH%)
+      - Лимфоциты (процент)
+
+  - slug: monocytes-abs
+    title: Моноциты (абс.)
+    value_kind: numeric
+    synonyms:
+      - Моноциты
+      - Моноциты (MONO)
+      - Моноциты (абсолютное значение)
+
+  - slug: monocytes-pct
+    title: Моноциты (%)
+    value_kind: numeric
+    synonyms:
+      - Моноциты (MONO%)
+      - Моноциты (процент)
+
+  - slug: eosinophils-abs
+    title: Эозинофилы (абс.)
+    value_kind: numeric
+    synonyms:
+      - Эозинофилы
+      - Эозинофилы (ЕО)
+      - Эозинофилы (EO)
+      - Эозинофилы (абсолютное значение)
+      - EO
+
+  - slug: eosinophils-pct
+    title: Эозинофилы (%)
+    value_kind: numeric
+    synonyms:
+      - Эозинофилы (ЕО%)
+      - Эозинофилы (EO%)
+      - Эозинофилы (процент)
+      - EO%
+
+  - slug: basophils-abs
+    title: Базофилы (абс.)
+    value_kind: numeric
+    synonyms:
+      - Базофилы (BASO)
+      - Базофилы (абсолютное значение)
+
+  - slug: basophils-pct
+    title: Базофилы (%)
+    value_kind: numeric
+    synonyms:
+      - Базофилы (BASO%)
+      - Базофилы (процент)
+
+  - slug: aso
+    title: Антистрептолизин-О
+    value_kind: numeric
+    synonyms:
+      - Антистрептолизин-О
+      - Антистрептолизин-О (АСЛ-О)
+      - АСЛ-О
+      - ASO
+
+  - slug: crp
+    title: С-реактивный белок
+    value_kind: numeric
+    synonyms:
+      - СРБ
+      - С-реактивный белок
+      - С-реактивный белок (СРБ)
+      - CRP
+      - CRP (С-реактивный белок)
+
+  - slug: cea
+    title: РЭА (CEA)
+    value_kind: numeric
+    synonyms:
+      - РЭА
+      - РЭА (CEA)
+      - CEA
+      - Раково-эмбриональный антиген
+
+  - slug: psa-total
+    title: ПСА общий
+    value_kind: numeric
+    synonyms:
+      - ПСА
+      - ПСА общий
+      - PSA
+      - PSA total
+      - Простат-специфический антиген
+
+  - slug: testosterone-total
+    title: Тестостерон общий
+    value_kind: numeric
+    synonyms:
+      - Тестостерон
+      - Тестостерон общий
+      - Total testosterone
+      - Testosterone
+
+  - slug: prolactin
+    title: Пролактин
+    value_kind: numeric
+    synonyms:
+      - Пролактин
+      - Prolactin
+
+  - slug: macroprolactin
+    title: Макропролактин
+    value_kind: numeric
+    synonyms:
+      - Макропролактин
+
+  - slug: prolactin-monomer
+    title: Пролактин мономерный (пост-ПЭГ)
+    value_kind: numeric
+    synonyms:
+      - Пролактин мономерный (пост-ПЭГ)
+      - Пролактин мономерный
+
+  - slug: magnesium
+    title: Магний
+    value_kind: numeric
+    synonyms:
+      - Магний
+      - Magnesium
+
+  - slug: potassium
+    title: Калий
+    value_kind: numeric
+    synonyms:
+      - Калий
+      - Калий ионизированный
+      - Potassium
+
+  - slug: sodium
+    title: Натрий
+    value_kind: numeric
+    synonyms:
+      - Натрий
+      - Натрий ионизированный
+      - Sodium
+
+  - slug: selenium
+    title: Селен
+    value_kind: numeric
+    synonyms:
+      - Селен
+      - Selenium
+
+  - slug: zinc
+    title: Цинк
+    value_kind: numeric
+    synonyms:
+      - Цинк
+      - Zinc
+
+  - slug: copper
+    title: Медь
+    value_kind: numeric
+    synonyms:
+      - Медь
+      - Copper
+
+  - slug: vitamin-b12
+    title: Витамин B12
+    value_kind: numeric
+    synonyms:
+      - Витамин В12
+      - Витамин B12
+      - Витамин В12 (цианокобаламин)
+      - B12
+
+  - slug: folate
+    title: Фолат (витамин B9)
+    value_kind: numeric
+    synonyms:
+      - Витамин В9 (фолиевая кислота)
+      - Фолиевая кислота
+      - Фолиевая кислота (витамин B9)
+      - Фолат
+      - Folate
+
+  - slug: homocysteine
+    title: Гомоцистеин
+    value_kind: numeric
+    synonyms:
+      - Гомоцистеин
+      - Homocysteine
+
+  - slug: esr
+    title: СОЭ
+    value_kind: numeric
+    synonyms:
+      - СОЭ
+      - Скорость оседания эритроцитов
+      - Скорость оседания эритроцитов (СОЭ)
+      - СОЭ (скорость оседания эритроцитов)
+      - СОЭ (метод кинетики агрегации)
+      - ESR
+
+  - slug: ldh
+    title: ЛДГ
+    value_kind: numeric
+    synonyms:
+      - ЛДГ
+      - Лактатдегидрогеназа
+      - Лактатдегидрогеназа (ЛДГ)
+      - Лактатдегидрогеназа общая
+      - LDH
+
+  - slug: phosphorus
+    title: Фосфор
+    value_kind: numeric
+    synonyms:
+      - Фосфор
+      - Фосфор неорганический
+      - Phosphorus
+
+  - slug: vldl
+    title: ЛПОНП
+    value_kind: numeric
+    synonyms:
+      - ЛПОНП
+      - Липопротеиды очень низкой плотности
+      - Липопротеиды очень низкой плотности (ЛПОНП)
+      - VLDL
+
+  - slug: atherogenic-index
+    title: Коэффициент атерогенности
+    value_kind: numeric
+    synonyms:
+      - Коэффициент атерогенности
+      - Коэффициент атерогенности (КА)
+      - Индекс атерогенности
+      - КА
+
+  - slug: egfr
+    title: СКФ
+    value_kind: numeric
+    synonyms:
+      - СКФ
+      - Скорость клубочковой фильтрации
+      - Скорость клубочковой фильтрации (СКФ)
+      - eGFR
+      - GFR
+
+  - slug: rheumatoid-factor
+    title: Ревматоидный фактор
+    value_kind: numeric
+    synonyms:
+      - Ревматоидный фактор
+      - РФ
+      - RF
+
+  - slug: thrombin-time
+    title: Тромбиновое время
+    value_kind: numeric
+    synonyms:
+      - Тромбиновое время
+      - Тромбиновое время (ТВ)
+      - ТВ
+      - TT
+
+  - slug: thrombin-time-ratio
+    title: Тромбиновое время (Ratio)
+    value_kind: numeric
+    synonyms:
+      - Тромбиновое время, Ratio
+      - Тромбиновое время (Ratio)
+      - ТВ Ratio
+
+  - slug: prothrombin-time
+    title: Протромбиновое время
+    value_kind: numeric
+    synonyms:
+      - Протромбиновое время
+      - ПТВ
+      - PT
+
+  - slug: prothrombin-quick
+    title: Протромбин по Квику
+    value_kind: numeric
+    synonyms:
+      - Протромбин (по Квику)
+      - Протромбин по Квику
+      - Quick
+
+  - slug: mpv
+    title: MPV
+    value_kind: numeric
+    synonyms:
+      - MPV
+      - Средний объем тромбоцитов
+      - Средний объем тромбоцитов (MPV)
+
+  - slug: pct
+    title: Тромбокрит
+    value_kind: numeric
+    synonyms:
+      - Тромбокрит
+      - Тромбокрит (PCT)
+      - Тромбокрит (РСТ)
+      - PCT
+
+  - slug: p-lcr
+    title: P-LCR
+    value_kind: numeric
+    synonyms:
+      - P-LCR
+      - Коэффициент больших тромбоцитов
+      - Коэффициент больших тромбоцитов (P-LCR)
+
+  - slug: band-neutrophils-pct
+    title: Палочкоядерные нейтрофилы (%)
+    value_kind: numeric
+    synonyms:
+      - Палочкоядерные нейтрофилы
+      - Палочкоядерные
+      - Нейтрофилы палочкоядерные
+      - Нейтрофилы палочкоядерные (процент)
+
+  - slug: band-neutrophils-abs
+    title: Палочкоядерные нейтрофилы (абс.)
+    value_kind: numeric
+    synonyms:
+      - Нейтрофилы палочкоядерные (абсолютное значение)
+
+  - slug: segmented-neutrophils-pct
+    title: Сегментоядерные нейтрофилы (%)
+    value_kind: numeric
+    synonyms:
+      - Сегментоядерные нейтрофилы
+      - Сегментоядерные
+      - Нейтрофилы сегментоядерные
+      - Нейтрофилы сегментоядерные (процент)
+
+  - slug: segmented-neutrophils-abs
+    title: Сегментоядерные нейтрофилы (абс.)
+    value_kind: numeric
+    synonyms:
+      - Нейтрофилы сегментоядерные (абсолютное значение)
