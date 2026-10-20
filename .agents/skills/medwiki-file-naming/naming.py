@@ -21,7 +21,7 @@ def main():
     gen = sub.add_parser("raw-docs", help="Generate raw/docs filename")
     gen.add_argument("--type", required=True, choices=[
         "consultation", "lab-panel", "discharge", "ultrasound", "mri",
-        "ct", "xray", "ecg", "histology", "endoscopy"
+        "ct", "xray", "ecg", "histology", "endoscopy", "procedure"
     ])
     gen.add_argument("--date", required=True, help="YYYY-MM-DD")
     gen.add_argument("--disambiguator", default="", help="Collision suffix: '2', 'cardiologist', etc.")
@@ -38,7 +38,7 @@ def main():
     img = sub.add_parser("raw-images", help="Generate raw/images filename")
     img.add_argument("--type", required=True, choices=[
         "consultation", "lab-panel", "discharge", "ultrasound", "mri",
-        "ct", "xray", "ecg", "histology", "endoscopy"
+        "ct", "xray", "ecg", "histology", "endoscopy", "procedure"
     ])
     img.add_argument("--date", required=True, help="YYYY-MM-DD")
     img.add_argument("--disambiguator", default="")

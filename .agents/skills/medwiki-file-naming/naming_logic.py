@@ -13,6 +13,7 @@ SUFFIX_MAP = {
     "ecg": "ecg",
     "histology": "histology",
     "endoscopy": "endoscopy",
+    "procedure": "procedure",
 }
 
 # Закрытый словарь специальностей для consultation: одно каноническое имя на специальность.
