@@ -22,7 +22,7 @@ SPECIALTIES = {
     "allergist", "angiosurgeon", "cardiologist", "dentist", "dermatologist",
     "endocrinologist", "gastroenterologist", "gynecologist", "hematologist",
     "lor", "mammologist", "nephrologist", "neurologist", "oncologist",
-    "ophthalmologist", "orthopedist", "psychiatrist", "pulmonologist",
+    "ophthalmologist", "orthopedist", "proctologist", "psychiatrist", "pulmonologist",
     "rheumatologist", "surgeon", "therapist", "traumatologist", "urologist",
 }
 
