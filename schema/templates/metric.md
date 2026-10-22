@@ -5,7 +5,7 @@ description:
 value_kind: numeric  # numeric | qualitative | panel-item
 unit:  # как в документе; для qualitative может быть пусто
 ref_range:  # как в документе; текст («не обнаружено» / «< 0.1») допустим
-status:  # normal | elevated | low | borderline — по последнему значению в «Динамике»
+status:  # normal | elevated | low | borderline | unknown — по последнему значению в «Динамике»
 tags: [metric]
 timestamp:
 ---
@@ -21,7 +21,7 @@ timestamp:
 
 ## Сводка
 
-Последнее значение, дата, статус относительно референса из документа. Для qualitative / panel-item значение в сводке — тот же текст, что в динамике.
+Последнее значение, день забора, статус относительно референса или по слову статуса из документа. Нет ни слова статуса, ни референса — `unknown`, значение как в документе. Для qualitative / panel-item значение в сводке — тот же текст, что в динамике.
 
 ## Динамика
 

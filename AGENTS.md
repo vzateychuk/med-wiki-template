@@ -61,7 +61,7 @@ For every request, first choose the route, then read and write. Instructions for
 | **P** | Personal fact | «мой», «у меня», a metric, a diagnosis, a test date |
 | **H** | Consultation using the dossier | health state, recommendation, training, nutrition, supplements, «можно ли мне» |
 | **G** | General theory | question not tied to the user |
-| **O** | What is not done | «что не закрыто», preparing for a action |
+| **O** | What is not done | «что не закрыто», preparing for an action |
 | **S** | Saving (not a medical document) | «сохрани в wiki» / «сохрани чат» / «сохрани обсуждение» / «запиши жалобу» / «сохрани отчёт» — see §S for **which target** |
 | **I** | Ingest | «загрузи», «обработай», «распознай», «сохрани» **медицинский документ** (скан, PDF, фото, готовый текст консультации/анализов/выписки/исследования) или статью |
 | **K** | Metric rebuild / fix | «пересобери метрику X», «почини динамику X», устаревшее «добавь X в ключевые» — пересобрать страницу показателя из всех `raw/docs/` (синонимы). Первичное заведение показателей с панели — на маршруте **I**, не K |
