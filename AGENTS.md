@@ -114,7 +114,7 @@ Do **not** open every file under `wiki/metrics/`. Do **not** treat `wiki/metrics
 2. Only the directions from the **Активные направления** section of `me.md` that relate to the question: the links from there and the related metrics (**metrics reading discipline** — few pages, smart window). Do not read all diagnoses. Do not read all metrics. After ingest — also the pages it updated. Notes on the topic from `wiki/notes/_index.md` — as past conclusions.
    - Метрики направления бери из раздела **«Связанные метрики»** страницы диагноза. Раздел пуст — **не** открывай все метрики: посмотри **«Мониторинг»** страницы диагноза и раздел «Назначенные обследования» в документе-источнике (ссылка в «Истории»). Если и там показателя нет — скажи, что данных нет, и предложи **K** или ingest. Не выдумывай релевантные показатели по медицинской логике.
    - На странице метрики раздел **«Связанные диагнозы»** — обратная сторона той же связи: проверь, что связь двусторонняя, иначе почини (правило записи — ingest, шаг 4).
-3. Gaps in general medicine — web search in reliable medical sources. Answer blocks: **Из wiki** (links to files) and **Из веб-источников** (links to sources).
+3. Gaps in general medicine — use the web when search/page-read tools are available in this session (policy — **Web** under Execution Rules). Answer blocks: **Из wiki** (links to files) and **Из веб-источников** (links only to pages you actually read). При запросах на поиск услуг/клиник/лабораторий: **сначала** читаем адрес в `wiki/profile/me.md`, включаем город в запрос по умолчанию. Явное указание города в вопросе пользователя перекрывает дефолт.
 4. Questions for the doctor — only in the answer (complaint or preparing for a visit). Do not put them into `open-actions.md`. If the user asks to save them — into a note (§S).
 5. At the end — suggestions; write them only after the user agrees:
    - a new complaint without a page — a page in `wiki/symptoms/` (§S);
@@ -126,7 +126,7 @@ Do **not** open every file under `wiki/metrics/`. Do **not** treat `wiki/metrics
 
 ### §G — General theory
 
-Do not read wiki or raw. Use model knowledge and the web. «Для меня», «при моих анализах» — switch to **H**.
+Do not read wiki or raw. Prefer verifying non-trivial claims via the web when those tools are available (same **Web** policy as under Execution Rules). «Для меня», «при моих анализах» — switch to **H**.
 
 ### §O — What is not done
 
@@ -151,8 +151,14 @@ The name of a new file — by the naming skill (table at the top of this file).
 
 ## Execution Rules [CRITICAL]
 
-1. **No guessing.** A metric, date, diagnosis, dose — only from wiki or raw, with a link next to it. No source — say what is missing. Unreadable text — `[НЕЧИТАЕМО]`. Mark an assumption in advice with the word «Допущение:».
-2. **Economy.** Do not scan all of `wiki/` and all of `raw/`: the route's entry point, then files by links and by the `status` and `tags` fields.
+1. **No guessing.** A metric, date, diagnosis, dose — only from wiki or raw, with a link next to it. No source — say what is missing. Unreadable text — `[НЕЧИТАЕМО]`. Mark an assumption in advice with the word «Допущение:». The web does not replace the dossier for personal facts.
+2. **Economy.** Do not scan all of `wiki/` and all of `raw/`: the route's entry point, then files by links and by the `status` and `tags` fields. Do not call web tools on routes that only need the dossier (**P**, **O**, **I**, **S**) unless the user explicitly asks for a general-medicine check.
 3. **Section edit.** Replace the section whole, do not break the YAML header, do not duplicate a table row.
 4. **Format.** Markdown. Time series and history — tables.
-5. **Missing capability** (web search, reading images, writing files) — tell the user what is missing and offer a substitute: an answer from model knowledge marked «без проверки по источникам»; the document text instead of a scan. Do not pretend the action was done.
+5. **Missing capability.** If a needed capability is absent in this session (no web tools, cannot read images, cannot write files) — say what is missing and offer a substitute: model knowledge marked «без проверки по источникам»; the document text instead of a scan. Do not pretend the action was done.
+6. **Web** (routes **H** and **G**). Describe *what* to achieve; pick whatever search/page-read tools the session exposes — do not hard-code tool names.
+   - Prefer clinical guidelines, major medical references, and regulators; avoid forums and supplement marketing as sole sources.
+   - Find candidates, then **read** the pages you will rely on. A search snippet alone is not a citable source.
+   - In **Из веб-источников** link only URLs you actually read. If search or page read failed — say so; never present model memory as a web finding.
+   - **Геолокация при поиске услуг**: при веб-поиске клиник, лабораторий, специалистов или медицинских услуг агент **обязан** сначала прочитать `wiki/profile/me.md` (поле «Адрес»). Если в запросе пользователя не указан явно иной город/регион, поисковый запрос формируется с обязательным указанием города пользователя (например, «Минск эндоскопия», «лаборатория Минск TSH»). Это исключает выдачу по нерелевантным регионам (например, Санкт-Петербург при проживании в Минске).
+   - **Пустой адрес в профиле**: если поле «Адрес» в `wiki/profile/me.md` пусто и пользователь запрашивает поиск услуг/клиник/лабораторий — **перед** веб-поиском задать **один** уточняющий вопрос: «Укажите, пожалуйста, город/регион для поиска (или заполните адрес в профиле)». Не выполнять поиск без геолокации.
