@@ -392,9 +392,11 @@ metrics:
     value_kind: numeric
     synonyms:
       - PINP
+      - P1NP
       - Total PINP
       - Маркер ремоделирования костей (Total PINP)
       - Маркер формирования костного матрикса (PINP)
+      - Маркер формирования костного матрикса P1NP
 
   - slug: osteocalcin
     title: Остеокальцин
