@@ -57,6 +57,7 @@ metrics:
     title: Витамин D (25-OH)
     value_kind: numeric
     synonyms:
+      - Витамин D общий
       - Витамин D
       - Витамин Д
       - 25-OH витамин D
@@ -103,6 +104,7 @@ metrics:
     title: ЛПНП-холестерин
     value_kind: numeric
     synonyms:
+      - ЛПНП (LDL)
       - ЛПНП
       - ЛПНП-холестерин
       - ЛПНП-холестерин (LDL)
@@ -117,6 +119,7 @@ metrics:
     title: ЛПВП-холестерин
     value_kind: numeric
     synonyms:
+      - ЛПВП (HDL)
       - ЛПВП
       - ЛПВП-холестерин
       - ЛПВП-холестерин (HDL)
@@ -259,6 +262,7 @@ metrics:
     title: Билирубин общий
     value_kind: numeric
     synonyms:
+      - Общий билирубин
       - Билирубин
       - Билирубин общий
       - Total bilirubin
@@ -267,6 +271,7 @@ metrics:
     title: Билирубин прямой
     value_kind: numeric
     synonyms:
+      - Прямой билирубин
       - Билирубин прямой
       - Билирубин связанный (прямой)
       - Direct bilirubin
@@ -362,6 +367,7 @@ metrics:
     title: Кальций общий
     value_kind: numeric
     synonyms:
+      - Общий кальций
       - Кальций
       - Кальций общий
       - Calcium
@@ -372,6 +378,8 @@ metrics:
     title: Паратгормон
     value_kind: numeric
     synonyms:
+      - Паратиреоидный гормон интактный (концентрация)
+      - Паратиреоидный гормон (интактный)
       - Паратгормон
       - Паратиреоидный гормон
       - ПТГ
@@ -419,6 +427,9 @@ metrics:
     title: АЧТВ (Ratio)
     value_kind: numeric
     synonyms:
+      - Отношение АПТВ
+      - АЧТВ отношение
+      - Отношение АЧТВ
       - АЧТВ (Ratio)
       - АЧТВ Ratio
       - APTT Ratio
@@ -460,6 +471,7 @@ metrics:
     title: Лейкоциты (моча)
     value_kind: qualitative
     synonyms:
+      - Лейкоциты в моче
       - Лейкоциты (моча)
 
   - slug: wbc-vagina
@@ -494,6 +506,7 @@ metrics:
     title: Эритроциты (моча)
     value_kind: qualitative
     synonyms:
+      - Эритроциты/гемоглобин в моче
       - Эритроциты (моча)
 
   - slug: rbc-vagina
@@ -512,6 +525,8 @@ metrics:
     title: Тромбоциты
     value_kind: numeric
     synonyms:
+      - Тромбоциты (count)
+      - Тромбоциты (количество)
       - Тромбоциты
       - Тромбоциты (PLT)
       - PLT
@@ -666,6 +681,7 @@ metrics:
     title: С-реактивный белок
     value_kind: numeric
     synonyms:
+      - С-реактивный белок (CRP)
       - СРБ
       - С-реактивный белок
       - С-реактивный белок (СРБ)
@@ -731,6 +747,7 @@ metrics:
     title: Калий
     value_kind: numeric
     synonyms:
+      - Ионизированный калий
       - Калий
       - Калий ионизированный
       - Potassium
@@ -739,6 +756,7 @@ metrics:
     title: Натрий
     value_kind: numeric
     synonyms:
+      - Ионизированный натрий
       - Натрий
       - Натрий ионизированный
       - Sodium
@@ -794,6 +812,7 @@ metrics:
     title: СОЭ
     value_kind: numeric
     synonyms:
+      - СОЭ (ESR)
       - СОЭ
       - Скорость оседания эритроцитов
       - Скорость оседания эритроцитов (СОЭ)
@@ -805,6 +824,7 @@ metrics:
     title: ЛДГ
     value_kind: numeric
     synonyms:
+      - ЛДГ (LDH)
       - ЛДГ
       - Лактатдегидрогеназа
       - Лактатдегидрогеназа (ЛДГ)
@@ -815,6 +835,7 @@ metrics:
     title: Фосфор
     value_kind: numeric
     synonyms:
+      - Неорганический фосфор
       - Фосфор
       - Фосфор неорганический
       - Phosphorus
@@ -838,6 +859,16 @@ metrics:
       - Атерогенный индекс
       - КА
 
+  - slug: free-androgen-index
+    title: Индекс свободных андрогенов (ИСА)
+    value_kind: numeric
+    synonyms:
+      - ИСА
+      - Индекс свободных андрогенов
+      - Индекс свободных андрогенов (ИСА)
+      - Free Androgen Index
+      - FAI
+
   - slug: egfr
     title: СКФ
     value_kind: numeric
@@ -860,6 +891,7 @@ metrics:
     title: Тромбиновое время
     value_kind: numeric
     synonyms:
+      - Время тромбина
       - Тромбиновое время
       - Тромбиновое время (ТВ)
       - ТВ
@@ -869,6 +901,8 @@ metrics:
     title: Тромбиновое время (Ratio)
     value_kind: numeric
     synonyms:
+      - Время тромбина отношение
+      - Отношение времени тромбина
       - Тромбиновое время, Ratio
       - Тромбиновое время (Ratio)
       - ТВ Ratio
@@ -885,6 +919,7 @@ metrics:
     title: Протромбин по Квику
     value_kind: numeric
     synonyms:
+      - Протромбин (быстрота)
       - Протромбин (по Квику)
       - Протромбин по Квику
       - Quick
@@ -910,6 +945,7 @@ metrics:
     title: P-LCR
     value_kind: numeric
     synonyms:
+      - pLcr
       - P-LCR
       - Коэффициент больших тромбоцитов
       - Коэффициент больших тромбоцитов (P-LCR)
@@ -943,3 +979,287 @@ metrics:
     value_kind: numeric
     synonyms:
       - Нейтрофилы сегментоядерные (абсолютное значение)
+
+  - slug: chloride
+    title: Хлориды
+    value_kind: numeric
+    synonyms:
+      - Хлориды
+      - Хлор
+      - Ионизированный хлорид
+      - Chloride
+
+  - slug: ionized-calcium
+    title: Кальций ионизированный
+    value_kind: numeric
+    synonyms:
+      - Кальций ионизированный
+      - Ионизированный кальций
+      - Ca++
+
+  - slug: pdw
+    title: PDW
+    value_kind: numeric
+    synonyms:
+      - PDW
+      - Ширина распределения тромбоцитов по объемам (PDW)
+
+  - slug: ck
+    title: Креатинкиназа (КФК)
+    value_kind: numeric
+    synonyms:
+      - КФК
+      - КФК (CPK)
+      - Креатинфосфокиназа
+      - Креатинфосфокиназа (КФК)
+      - CK
+
+  - slug: psa-free
+    title: ПСА свободный
+    value_kind: numeric
+    synonyms:
+      - ПСА свободный
+      - свободный ПСА
+      - fPSA
+
+  - slug: psa-free-total-ratio
+    title: Соотношение fPSA/PSA
+    value_kind: numeric
+    synonyms:
+      - Соотношение fPSA/PSAT
+      - fPSA/PSA
+      - Индекс свободного ПСА
+
+  - slug: lh
+    title: Лютеинизирующий гормон (ЛГ)
+    value_kind: numeric
+    synonyms:
+      - ЛГ
+      - ЛГ (лютеинизирующий гормон)
+      - Лютеинизирующий гормон
+
+  - slug: shbg
+    title: ГСПГ (SHBG)
+    value_kind: numeric
+    synonyms:
+      - ГСПГ
+      - ГСПГ (SHBG)
+      - ГСПГ (секс-гормон связывающий глобулин)
+      - SHBG
+
+  - slug: estradiol
+    title: Эстрадиол
+    value_kind: numeric
+    synonyms:
+      - Эстрадиол
+      - E2
+
+  - slug: c-peptide
+    title: С-пептид
+    value_kind: numeric
+    synonyms:
+      - С-пептид
+      - C-пептид
+      - C-peptide
+
+  - slug: glucose-120min
+    title: Глюкоза через 120 мин (ОГТТ)
+    value_kind: numeric
+    synonyms:
+      - Глюкоза через 120 мин
+      - Глюкоза 120 мин
+      - Глюкоза постнагрузочная
+
+  - slug: protein-urine
+    title: Белок (моча)
+    value_kind: numeric
+    synonyms:
+      - Белок мочи
+      - Белок (моча)
+
+  - slug: glucose-urine
+    title: Глюкоза (моча)
+    value_kind: numeric
+    synonyms:
+      - Глюкоза мочи
+      - Глюкоза (моча)
+
+  - slug: bilirubin-urine
+    title: Билирубин (моча)
+    value_kind: qualitative
+    synonyms:
+      - Билирубин в моче
+      - Билирубин (моча)
+
+  - slug: ketones-urine
+    title: Кетоны (моча)
+    value_kind: qualitative
+    synonyms:
+      - Кетоновые тела
+      - Кетоны
+      - Кетоны (моча)
+
+  - slug: urine-specific-gravity
+    title: Удельный вес (моча)
+    value_kind: numeric
+    synonyms:
+      - Удельный вес
+      - Относительная плотность мочи
+
+  - slug: urine-ph
+    title: pH мочи
+    value_kind: numeric
+    synonyms:
+      - pH
+      - pH мочи
+
+  - slug: urine-color
+    title: Цвет мочи
+    value_kind: qualitative
+    synonyms:
+      - Цвет мочи
+
+  - slug: nitrites-urine
+    title: Нитриты (моча)
+    value_kind: qualitative
+    synonyms:
+      - Нитриты
+      - Нитриты (моча)
+
+  - slug: bacteria-urine
+    title: Бактерии (моча)
+    value_kind: qualitative
+    synonyms:
+      - Бактерии (моча)
+
+  - slug: mucus-urine
+    title: Слизь (моча)
+    value_kind: qualitative
+    synonyms:
+      - Слизь (моча)
+
+  - slug: oxalates-urine
+    title: Оксалаты (моча)
+    value_kind: qualitative
+    synonyms:
+      - Оксалаты (моча)
+
+  - slug: crystals-urine
+    title: Кристаллы (моча)
+    value_kind: qualitative
+    synonyms:
+      - Кристаллы (моча)
+
+  - slug: calcium-oxalate-urine
+    title: Кристаллы оксалата кальция (моча)
+    value_kind: numeric
+    synonyms:
+      - Кристаллы оксалата кальция (моча)
+
+  - slug: casts-urine
+    title: Цилиндры (моча)
+    value_kind: numeric
+    synonyms:
+      - Цилиндры (моча)
+
+  - slug: hyaline-casts-urine
+    title: Гиалиновые цилиндры (моча)
+    value_kind: qualitative
+    synonyms:
+      - Гиалиновые цилиндры (моча)
+
+  - slug: non-hyaline-casts-urine
+    title: Негиалиновые цилиндры (моча)
+    value_kind: qualitative
+    synonyms:
+      - Негиалиновые цилиндры (моча)
+
+  - slug: squamous-epithelium-urine
+    title: Плоский эпителий (моча)
+    value_kind: qualitative
+    synonyms:
+      - Плоский эпителий (моча)
+
+  - slug: non-squamous-epithelium-urine
+    title: Неплоский эпителий (моча)
+    value_kind: qualitative
+    synonyms:
+      - Неплоский эпителий (моча)
+
+  - slug: transitional-epithelium-urine
+    title: Переходный эпителий (моча)
+    value_kind: qualitative
+    synonyms:
+      - Переходный эпителий (моча)
+
+  - slug: renal-tubular-epithelium-urine
+    title: Почечный канальцевый эпителий (моча)
+    value_kind: qualitative
+    synonyms:
+      - Почечный канальцевый эпителий (моча)
+
+  - slug: epithelium-urine
+    title: Эпителий (моча)
+    value_kind: qualitative
+    synonyms:
+      - Эпителий (моча)
+
+  - slug: yeast-urine
+    title: Дрожжи (моча)
+    value_kind: qualitative
+    synonyms:
+      - Дрожжи (моча)
+
+  - slug: unlysed-rbc-urine
+    title: Нелизированные эритроциты (моча)
+    value_kind: qualitative
+    synonyms:
+      - Нелизированные эритроциты (моча)
+
+  - slug: wbc-clumps-urine
+    title: Скопления лейкоцитов (моча)
+    value_kind: qualitative
+    synonyms:
+      - Скопления лейкоцитов (моча)
+
+  - slug: urine-clarity
+    title: Прозрачность мочи
+    value_kind: qualitative
+    synonyms:
+      - Прозрачность мочи
+
+  - slug: urine-reaction
+    title: Реакция мочи
+    value_kind: qualitative
+    synonyms:
+      - Реакция мочи
+
+  - slug: ca19-9
+    title: CA 19-9
+    value_kind: numeric
+    synonyms:
+      - CA 19-9
+
+  - slug: ca72-4
+    title: CA 72-4
+    value_kind: numeric
+    synonyms:
+      - CA 72-4
+
+  - slug: sperm-urine
+    title: Сперматозоиды (моча)
+    value_kind: qualitative
+    synonyms:
+      - Сперматозоиды (моча)
+
+  - slug: free-testosterone
+    title: Тестостерон свободный
+    value_kind: numeric
+    synonyms:
+      - Тестостерон свободный
+
+  - slug: urobilinogen-urine
+    title: Уробилиноген (моча)
+    value_kind: numeric
+    synonyms:
+      - Уробилиноген (моча)
