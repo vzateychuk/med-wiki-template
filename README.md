@@ -34,12 +34,12 @@ git submodule update --init --recursive
 
 ## Обновить шаблон в patient-репо
 
-После изменений в `med-wiki-template` (этот репозиторий):
+После изменений в `med-wiki-template`:
 
 ```bash
 cd <patient-repo>
 git submodule update --remote --merge template
-git add template
+git add template (либо `git add .`, он включает в себя и обновление template)
 git commit -m "chore: bump med-wiki-template"
 git push
 ```
