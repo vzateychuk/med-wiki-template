@@ -1,6 +1,7 @@
 # gitignore
 
 raw/
+.obsidian/
 __pycache__/
 
 *.log
