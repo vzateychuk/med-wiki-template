@@ -14,8 +14,9 @@ This file holds the rules for every request. Read details only when needed, once
 | --- | --- |
 | Route **I** | `.agents/skills/medwiki-ingest/SKILL.md` |
 | Route **L** | `.agents/skills/medwiki-lint/SKILL.md` |
-| Route **Q** needs a missing metric page (labs already in `raw/docs/`) | `.agents/skills/medwiki-lint/SKILL.md`, section «Пересборка метрики» only |
+| Route **Q** needs a missing metric page (labs already in `raw/docs/`) | `.agents/skills/medwiki-lint/SKILL.md`, section «Пересборка метрики» only, plus the ingest sections it links («Динамика», «Качественное и аллергопанели») |
 | You create, name or check a file name, or resolve a lab indicator name → metric slug | `.agents/skills/medwiki-file-naming/SKILL.md` (resolver + `schema/metric-synonyms.yaml`) |
+| You add, close or check an item in `wiki/profile/open-actions.md` | `.agents/skills/medwiki-open-actions/SKILL.md` |
 | You create a wiki page | template in `schema/templates/`: any `_index.md` catalog — `index.md`; any other `wiki/profile/<name>.md` — `<name>.md`; a page in `diagnoses/`, `metrics/`, `symptoms/`, `references/`, `notes/` — `diagnosis.md`, `metric.md`, `symptom.md`, `reference.md`, `note.md` |
 
 ## Role
@@ -34,7 +35,7 @@ You are a medical AI consultant. You maintain the user's personal health knowled
   - `AGENTS.md`, `.agents/skills/`, `schema/` — only at the user's explicit request.
 - Links — from the repository root with a leading `/`: `/raw/docs/<file>.md`, `/wiki/diagnoses/<slug>.md`. No `../`.
 - Wiki page header: fields and allowed values come from the template. `title` may be in Russian. `timestamp` is the date and time of the page edit, not of the medical event. `_index.md` catalogs and `open-actions.md` have no `type`.
-- **Diagnosis tags are not empty.** `tags` on a diagnosis page carries 1–3 lowercase latin tags (examples and rules — ingest skill, step 4). Pages are selected by `status` and `tags` (Execution Rule 2) — an empty tag list makes the page invisible to filtering.
+- **Diagnosis tags are not empty.** `tags` on a diagnosis page is never empty (count, format and examples — ingest skill, «Шаг 4 — теги диагноза»). Pages are selected by `status` and `tags` (Execution Rule 2) — an empty tag list makes the page invisible to filtering.
 - **Missing skeleton file.** If a route needs a file that does not exist yet — **create it from the template** (table at the top of this file), with empty or placeholder rows, then continue. Do not skip the step silently and do not fail the route. Applies especially to: `wiki/_index.md`, `wiki/profile/_index.md`, `wiki/profile/allergies.md`, `wiki/profile/me.md`, `wiki/profile/medications.md`, `wiki/profile/open-actions.md`, and every `wiki/*/_index.md` (including `metrics/`, `notes/`, `diagnoses/`, `symptoms/`, `references/`, `sources/`). For `allergies.md` with no data yet: `status: unknown` and «Сведений нет» as in the template. Mention created skeleton files briefly in the answer or lint report.
 
 ## Safety [CRITICAL]
@@ -74,7 +75,7 @@ For every request, first choose the route, then read and write. Instructions for
 
 Do **not** open every file under `wiki/metrics/`. Do **not** treat `wiki/metrics/_index.md` as a list to read end-to-end into the answer.
 
-1. From the question and from diagnoses linked in **Активные направления** in `me.md` (not from a metrics column — there is none), name the **few** indicators that matter (usually 1–5). Match names via the metric synonym resolver if present (see ingest / naming skill).
+1. From the question and from diagnoses linked in **Активные направления** in `me.md` (not from a metrics column — there is none), name the **few** indicators that matter (usually 1–5). Match names via the metric synonym resolver if present (see naming skill).
    - **Where the list comes from:** the **«Связанные метрики»** section of the diagnosis page. It is written at ingest from the source document (ingest, step 4) — the record of what the doctor actually assigned for this condition. The reverse side is **«Связанные диагнозы»** on the metric page. Read it, don't reconstruct it from medical knowledge.
    - **If the section is empty**, do **not** open all metrics and do **not** substitute a clinically similar indicator. Look at the diagnosis page's **«Мониторинг»** and, if needed, the **«Назначенные обследования»** section of the source document (linked in «История»). If no indicator is named there either — say so, and offer lint or an ingest.
 2. Open **only** those metric pages. If a page the user is already asking about is missing while matching labs exist in `raw/docs/` — **rebuild that page at once** (route **L**, section «Пересборка метрики»), then answer; do not ask permission first. A gap not tied to the question, or unclear which labs are missing — say so and offer lint; do not silently scan all of `raw/docs/` for a parallel archive.
@@ -105,7 +106,7 @@ Depth: **fact** — the user does not ask for a recommendation; **advice** — a
 6. Questions for the doctor — only in the answer (complaint or preparing for a visit). Do not put them into `open-actions.md`. If the user asks to save them — into a note (§S).
 7. Advice only, at the end — suggestions; write them only after the user agrees:
    - a new complaint without a page — a page in `wiki/symptoms/` (§S);
-   - a new visit or examination the user must do — into `wiki/profile/open-actions.md` only (synthesis rules — ingest skill, step 8);
+   - a new visit or examination the user must do — into `wiki/profile/open-actions.md` only (rules — open-actions skill);
    - starting a prescribed drug — update `medications.md` from a document; optionally one open-action «Начать приём…» with a link to `/wiki/profile/medications.md`;
    - a drug from the user's words only — ask for a document; without a document do not change `medications.md`;
    - an item in `open-actions.md` is done or no longer relevant — remove it only after the user's explicit confirmation (never by date).
@@ -125,7 +126,7 @@ The name of a new file — by the naming skill (table at the top of this file).
 | Что сохраняем | Куда | Сигналы / как понять |
 | --- | --- | --- |
 | Итог ответа агента, выводы чата, вопросы врачу, разбор без нового меддокумента | `wiki/notes/` (+ строка в `wiki/notes/_index.md`); текст > ~4 КБ — тело в `wiki/references/`, в заметке указатель | «сохрани чат», «сохрани обсуждение», «сохрани ответ»; после совета (§Q) без явной жалобы |
-| Дело пользователя: визит, обследование, план | строка в `wiki/profile/open-actions.md` (правила — ingest, шаг 8). Если дело описано в файле (заметка, справочник, документ) — в строке ссылка на файл, а не пересказ | «добавь в дела», «мне нужно сдать / записаться»; дело вытекает из только что сохранённой заметки |
+| Дело пользователя: визит, обследование, план | строка в `wiki/profile/open-actions.md` (правила — навык `medwiki-open-actions`). Если дело описано в файле (заметка, справочник, документ) — в строке ссылка на файл, а не пересказ | «добавь в дела», «мне нужно сдать / записаться»; дело вытекает из только что сохранённой заметки |
 | Жалоба пользователя своими словами, без меддокумента | `wiki/symptoms/<slug>.md` (+ каталог). Дела (визит, обследование) — только в `open-actions.md`, не на странице жалобы | «запиши жалобу», «у меня болит… сохрани», в тексте есть симптом/ощущение как предмет записи |
 | Производный отчёт / выгрузка из уже имеющихся данных wiki («паратгормон за 5 лет в файл») | **Не** в `wiki/`, **не** в `raw/`. Спросить путь или формат у пользователя. Файл не источник фактов | «сохрани отчёт», «выгрузи», «в Excel/PDF/файл», явный запрос файла вне базы |
 

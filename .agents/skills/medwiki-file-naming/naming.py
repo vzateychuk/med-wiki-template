@@ -65,8 +65,10 @@ def main():
         if args.action == "raw-docs":
             name = format_raw_docs_name(args.type, args.date, args.disambiguator)
             if args.check_exists and os.path.exists(os.path.join(args.check_exists, name)):
-                print(f"ALREADY EXISTS: {name}. Document is probably already loaded: "
-                      "ask the user, do not create a new name.", file=sys.stderr)
+                print(f"ALREADY EXISTS: {name}. Another document with the same date, type and specialty: "
+                      "retry with a numeric --disambiguator (2, or <specialty>-2 for consultation), "
+                      "do not ask the user. Whether a document is already loaded is decided by "
+                      "wiki/sources/_index.md, not by the file name.", file=sys.stderr)
                 sys.exit(4)
             print(name)
         elif args.action == "check":
