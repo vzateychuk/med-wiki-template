@@ -2,6 +2,7 @@
 
 raw/
 .obsidian/
+.pi/
 __pycache__/
 
 *.log
